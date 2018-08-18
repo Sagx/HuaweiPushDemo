@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '25.0.0'
+
+    signingConfigs {
+        release {
+            storeFile file('hwPushDemo.jks')
+            keyAlias 'key0'
+            keyPassword 'fudong3710'
+            storePassword 'fudong3710'
+        }
+    }
+    defaultConfig {
+        applicationId "com.huawei.hmssdksagdemo"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 90000000
+        versionName "9.0.0"
+        manifestPlaceholders = [HMSVERSION: "2.6.1", PACKAGE_NAME: "com.huawei.hmssdksagdemo", APPID: "100378125", CPID: "10086000000000293"]
+        signingConfig signingConfigs.release
+    }
+
+    buildTypes {
+        release {
+            //Obfuscation configuration
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // Signature configuration
+            signingConfig signingConfigs.release
+            debuggable true
+        }
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    // 此处版本号仅为示例，请手动修改成实际集成的HMSSDK版本号
+    String HMSSDKVer = '2.6.1.301'
+    compile 'com.huawei.android.hms:iap:' + HMSSDKVer
+    compile 'com.huawei.android.hms:game:' + HMSSDKVer
+    compile 'com.huawei.android.hms:sns:' + HMSSDKVer
+    compile 'com.huawei.android.hms:hwid:' + HMSSDKVer
+    compile 'com.huawei.android.hms:push:' + HMSSDKVer
+    compile 'com.huawei.android.hms:opendevice:' + HMSSDKVer
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.9.0'
+
+}
+
+repositories { flatDir { dirs '../aars' } }

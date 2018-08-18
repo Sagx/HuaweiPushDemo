@@ -1,0 +1,4 @@
+gradlew clean assembleRelease
+
+
+
